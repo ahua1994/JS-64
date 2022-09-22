@@ -2,11 +2,10 @@ const dob = document.querySelector("#birth");
 let today = new Date().toJSON().split(".")[0];
 dob.max = today;
 
-let units = [31536000, 2628000, 86400, 3600, 60, 1];
-
 let unitText = document.getElementsByClassName("unit");
 
 dob.addEventListener("change", updateTime);
+console.log(unitText);
 
 function updateTime() {
     document.body.style.backgroundImage =
@@ -14,11 +13,13 @@ function updateTime() {
 
     setInterval(() => {
         let birth = document.querySelector("#birth");
-        let time = (new Date() - new Date(birth.value)) / 1000;
-        for (let i = 0; i < unitText.length; i++) {
-            let unit = Math.floor(time / units[i]);
-            unitText[i].innerHTML = unit > 9 ? unit : "0" + unit;
-            time -= units[i] * unit;
-        }
+        let now = new Date();
+        let time = new Date(now - new Date(birth.value));
+        unitText[0].innerHTML = `${time.getFullYear() - 1970}`.padStart(2, "0");
+        unitText[1].innerHTML = `${time.getMonth()}`.padStart(2, "0");
+        unitText[2].innerHTML = `${time.getDate()}`.padStart(2, "0");
+        unitText[3].innerHTML = `${time.getHours()}`.padStart(2, "0");
+        unitText[4].innerHTML = `${time.getMinutes()}`.padStart(2, "0");
+        unitText[5].innerHTML = `${time.getSeconds()}`.padStart(2, "0");
     }, 1000);
 }
